@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, FlatList, useWindowDimensions, ActivityIndicator, Image, Touchable, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, FlatList, useWindowDimensions, ActivityIndicator, Image, RefreshControl, TouchableOpacity } from 'react-native';
 import pidea from '../api/pidea';
 import RenderHtml from 'react-native-render-html';
 
@@ -7,10 +7,12 @@ const PostsList = ( {navigation} ) => {
     // console.log(navigation);
     const [isLoading, setLoading] = useState(true);
     const [results, setResults] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const api = async () => {
         try {
             const response = await pidea.get('/?per_page=15&_embed')
+            setRefreshing(false);
             setResults(response);
             
         } catch (err) {
@@ -26,7 +28,28 @@ const PostsList = ( {navigation} ) => {
     },[]);
     
     // const posts = ;
-        
+    const onRefresh = () => {
+        setRefreshing(true);
+        setLoading(true);
+        setResults([]);
+        api();
+    };
+    
+    const ItemSeparatorView = () => {
+        return (
+          // Flat List Item Separator
+          <View
+            style={{
+              height: 0.8,
+              width: '100%',
+              backgroundColor: '#000000',
+              marginBottom: 10,
+              marginTop: 10
+            }}
+          />
+        );
+      };
+    
     const { width } = useWindowDimensions();
     return (
         <View>
@@ -49,6 +72,14 @@ const PostsList = ( {navigation} ) => {
                         </TouchableOpacity>
                     )
                 }}
+                ItemSeparatorComponent={ItemSeparatorView}
+                refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                      tintColor="#dd0020"
+                    />
+                }
             />
             )}
             

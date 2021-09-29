@@ -56,7 +56,10 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="Posts" component={PostsList} />
-        <Stack.Screen name="Post" component={PostShow} options={({ route }) => ({ title: route.params.title})}/>
+        <Stack.Screen name="Post" component={PostShow} 
+        options={({ route }) => ({ 
+          title: route.params.title
+          })}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
