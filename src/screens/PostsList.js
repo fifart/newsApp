@@ -27,7 +27,6 @@ const PostsList = ( {navigation} ) => {
         api();
     },[]);
     
-    // const posts = ;
     const onRefresh = () => {
         setRefreshing(true);
         setLoading(true);

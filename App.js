@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as WebBrowser from 'expo-web-browser';
 import PostsList from './src/screens/PostsList';
 import PostShow from './src/screens/PostShow';
-
+import RenderHtml from 'react-native-render-html';
 
 const HomeScreen = ( { navigation } ) => {
 

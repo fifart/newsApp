@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, useWindowDimensions } from 'react-native';
+import { ScrollView, View, Image, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 const PostShow = ({ route }) => {
     const { id, title, image, content } = route.params;
     const { width } = useWindowDimensions();
     return (
-        <View style={{flex: 1}}>
+        <ScrollView>
+        <View style={{flex: 1, marginBottom: 20, padding: 10}}>
             <RenderHtml
                 contentWidth={width}
                 source={{html: title}}
@@ -17,9 +18,8 @@ const PostShow = ({ route }) => {
                 contentWidth={width}
                 source={{html: content}}
             />
-            
-
         </View>
+        </ScrollView>
     )
 }
 
