@@ -26,7 +26,7 @@ const HomeScreen = ( { navigation } ) => {
     <Text></Text>
     <Button
     style={styles.buttons} 
-    title="Posts"
+    title="RefoRmer"
     onPress={() => navigation.navigate('Posts')}
     />
     <Text></Text>
@@ -55,7 +55,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="About" component={AboutScreen} />
-        <Stack.Screen name="Posts" component={PostsList} />
+        <Stack.Screen name="Posts" component={PostsList} options={({ route }) => ({ 
+          title: 'RefoRmer'
+          })}/>
         <Stack.Screen name="Post" component={PostShow} 
         options={({ route }) => ({ 
           title: route.params.title

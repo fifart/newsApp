@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, FlatList, useWindowDimensions, ActivityIndicato
 import pidea from '../api/pidea';
 import RenderHtml from 'react-native-render-html';
 
+
 const PostsList = ( {navigation} ) => {
     // console.log(navigation);
     const [isLoading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const PostsList = ( {navigation} ) => {
 
     const api = async () => {
         try {
-            const response = await pidea.get('/?per_page=15&_embed')
+            const response = await pidea.get('/?per_page=50&_embed')
             setRefreshing(false);
             setResults(response);
             
@@ -50,23 +51,28 @@ const PostsList = ( {navigation} ) => {
       };
     
     const { width } = useWindowDimensions();
+    
+    const _handlePressButtonAsync = async (postLink) => {
+        let postUrl = await WebBrowser.openBrowserAsync(postLink);
+        setResult(radioUrl);
+      };
     return (
         <View>
-            <Text style={{fontSize: 18, alignSelf: 'center'}}>ΠΑΝΙΩΝΙΑ ΙΔΕΑ</Text>
+            <Text style={{fontSize: 18, alignSelf: 'center'}}>RefoRmer</Text>
             { isLoading ? <ActivityIndicator animating={true} size="large" style={{opacity:1}} color="#db0020" /> : (
                 <FlatList
                 data={results.data}
                 keyExtractor={result=>result.id.toString()}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity style={{flex: 1}} onPress={ () => navigation.navigate('Post', {id: item.id, title: item.title.rendered, image: item._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url, content: item.content.rendered }) }>
+                        <TouchableOpacity style={{flex: 1}} onPress={ () => navigation.navigate('Post', {id: item.id, title: item.title.rendered, image: item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url, content: item.content.rendered }) }>
                         <RenderHtml
                         contentWidth={width}
                         source={{html: item.title.rendered}}
                         />
                         <Image
                         style={{height:200}}
-                        source={{uri: item._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url}}
+                        source={{uri: item._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url}}
                         />
                         </TouchableOpacity>
                     )
